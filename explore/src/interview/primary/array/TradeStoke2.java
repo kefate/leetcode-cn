@@ -1,8 +1,5 @@
 package interview.primary.array;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 买卖股票的最佳时机 II
  * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/22/
@@ -20,76 +17,16 @@ public class TradeStoke2 {
      */
 
     private static int maxProfit(int[] prices) {
-        if (prices == null || prices.length == 0) {
+        if (prices == null || prices.length <= 0) {
             return 0;
         }
-        // 删除相邻的重复元素
-        List<Integer> removeRepeatPrices = new ArrayList<>();
-        removeRepeatPrices.add(prices[0]);
+        int maxProfit = 0;
         for (int i = 1; i < prices.length; i++) {
-            if (prices[i] != prices[i - 1]) {
-                removeRepeatPrices.add(prices[i]);
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
             }
         }
-        if (removeRepeatPrices.size() == 1) {
-            return 0;
-        }
-        if (removeRepeatPrices.size() == 2) {
-            int dif = removeRepeatPrices.get(1) - removeRepeatPrices.get(0);
-            return Math.max(dif, 0);
-        }
-
-        // 元素个数大于2，设置极大/小值标识
-        boolean[] maxFlag = new boolean[removeRepeatPrices.size()];
-        boolean[] minFlag = new boolean[removeRepeatPrices.size()];
-        setMaxMinFlag(removeRepeatPrices, maxFlag, minFlag);
-
-
-        // true：下一步只能买，false：下一步只能卖
-        boolean buySaleFlag = true;
-        int low = 0, high = 0;
-        int profit = 0;
-        for (int i = 0; i < removeRepeatPrices.size(); i++) {
-            if (buySaleFlag && minFlag[i]) {
-                low = removeRepeatPrices.get(i);
-                buySaleFlag = false;
-            } else if (!buySaleFlag && maxFlag[i]) {
-                high = removeRepeatPrices.get(i);
-                buySaleFlag = true;
-                profit += high - low;
-            }
-        }
-        return profit;
-    }
-
-    private static void setMaxMinFlag(List<Integer> removeRepeatPrices, boolean[] maxFlag, boolean[] minFlag) {
-        for (int i = 0; i < removeRepeatPrices.size(); i++) {
-            minFlag[i] = false;
-            maxFlag[i] = false;
-            if (i == 0) {
-                if (removeRepeatPrices.get(i) < removeRepeatPrices.get(i + 1)) {
-                    minFlag[i] = true;
-                } else {
-                    maxFlag[i] = true;
-                }
-                continue;
-            }
-            if (i == removeRepeatPrices.size() - 1) {
-                if (removeRepeatPrices.get(i) < removeRepeatPrices.get(i - 1)) {
-                    minFlag[i] = true;
-                } else {
-                    maxFlag[i] = true;
-                }
-                continue;
-            }
-            if (removeRepeatPrices.get(i) < removeRepeatPrices.get(i - 1)
-                    && removeRepeatPrices.get(i) < removeRepeatPrices.get(i + 1)) {
-                minFlag[i] = true;
-            } else if (removeRepeatPrices.get(i) > removeRepeatPrices.get(i - 1)
-                    && removeRepeatPrices.get(i) > removeRepeatPrices.get(i + 1)) {
-                maxFlag[i] = true;
-            }
-        }
+        return maxProfit;
     }
 
     public static void main(String[] args) {
