@@ -3,12 +3,14 @@ package interview.primary.array;
 import java.util.Arrays;
 
 /**
+ * 从排序数组中删除重复项
+ * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/21/
+ *
  * @author kefate
  * @date 2019/10/8
  */
 public class RemoveDuplicates {
     /**
-     * https://leetcode-cn.com/explore/interview/card/top-interview-questions-easy/1/array/21/
      *
      * 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
      *
