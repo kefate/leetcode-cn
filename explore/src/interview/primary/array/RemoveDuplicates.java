@@ -52,26 +52,14 @@ public class RemoveDuplicates {
         if (nums == null || nums.length == 0) {
             return 0;
         }
-        int tmp;
-        int max = nums[nums.length - 1];
-        int i = 0;
-        for (; i < nums.length - 1; ) {
-            if (nums[i + 1] == nums[i]) {
-                if (nums[i + 1] == max) {
-                    break;
-                }
-                tmp = nums[i + 1];
-                for (int j = i + 1; j < nums.length - 1; j++) {
-                    nums[j] = nums[j + 1];
-                }
-                nums[nums.length - 1] = tmp;
-            } else if (nums[i + 1] > nums[i]) {
-                i++;
-            } else {
-                break;
+        int len = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != nums[i - 1]) {
+                nums[len] = nums[i];
+                len++;
             }
         }
-        return i + 1;
+        return len;
     }
 
     public static void main(String[] args) {
